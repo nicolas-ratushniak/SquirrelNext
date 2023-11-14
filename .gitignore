@@ -1,7 +1,3 @@
-# User Specific
-appsettings.json
-!Deployment/Releases/
-
 # Rider
 .idea/
 *.user
@@ -37,3 +33,6 @@ packages/
 # Logs and temporary files
 *.log
 *.tmp
+
+# User Specific
+!Deployment/Releases/
