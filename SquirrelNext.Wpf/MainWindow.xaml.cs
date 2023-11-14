@@ -7,7 +7,7 @@ namespace SquirrelNext.Wpf;
 
 public partial class MainWindow
 {
-    private const string RepositoryUrl = "https://github.com/meJevin/WPFFrameworkTest";
+    private const string RepoUrl = "https://github.com/meJevin/WPFFrameworkTest";
 
     public MainWindow()
     {
@@ -17,13 +17,13 @@ public partial class MainWindow
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        using var manager = await UpdateManager.GitHubUpdateManager(RepositoryUrl);
+        using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
         CurrentVersionTextBox.Text = manager.CurrentlyInstalledVersion().ToString();
     }
 
     private async void CheckForUpdatesButton_Click(object sender, RoutedEventArgs e)
     {
-        using var manager = await UpdateManager.GitHubUpdateManager(RepositoryUrl);
+        using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
         var updateInfo = await manager.CheckForUpdate();
 
         UpdateButton.IsEnabled = updateInfo.ReleasesToApply.Any();
@@ -31,7 +31,7 @@ public partial class MainWindow
 
     private async void UpdateButton_Click(object sender, RoutedEventArgs e)
     {
-        using var manager = await UpdateManager.GitHubUpdateManager(RepositoryUrl);
+        using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
 
         try
         {
