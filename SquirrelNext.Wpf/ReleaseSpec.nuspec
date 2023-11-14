@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>SquirrelNext</id>
+        <version>0.0.0</version>
+        <title>Title</title>
+        <authors>Mykola</authors>
+        <description>Just a test project</description>
+    </metadata>
+
+    <files>
+        <file src="bin\Release\net7.0-windows\**" target="lib\net45"/>
+    </files>
+</package>
