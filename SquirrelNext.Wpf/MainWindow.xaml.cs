@@ -21,6 +21,7 @@ public partial class MainWindow
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
+        RestoreSettings("appsettings.json");
         using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
         CurrentVersionTextBox.Text = manager.CurrentlyInstalledVersion()?.ToString() ?? "0.0.0";
     }
@@ -52,7 +53,6 @@ public partial class MainWindow
         {
             BackupSettings("appsettings.json");
             await manager.UpdateApp();
-            RestoreSettings("appsettings.json");
         }
         catch (Exception ex)
         {
