@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SquirrelNext.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Gold">
+    <Grid Background="GreenYellow">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label>
                 Current version

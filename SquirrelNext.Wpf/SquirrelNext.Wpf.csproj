@@ -5,9 +5,9 @@
         <TargetFramework>net7.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
-        <AssemblyVersion>1.0.2</AssemblyVersion>
-        <FileVersion>1.0.2</FileVersion>
-        <VersionStampOnBuild>true</VersionStampOnBuild>
+        <AssemblyVersion>1.1.0</AssemblyVersion>
+        <FileVersion>1.1.0</FileVersion>
+        <VersionStampOnBuild>false</VersionStampOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
