@@ -25,6 +25,10 @@
             <Button Click="CheckForUpdatesButton_Click">
                 Check
             </Button>
+            
+            <Button Click="SumButton_OnClick">
+                2 + 2 =
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

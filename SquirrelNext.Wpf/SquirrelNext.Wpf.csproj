@@ -5,42 +5,55 @@
         <TargetFramework>net7.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
-        <AssemblyVersion>1.0.1</AssemblyVersion>
-        <FileVersion>1.0.1</FileVersion>
+        <AssemblyVersion>1.0.2</AssemblyVersion>
+        <FileVersion>1.0.2</FileVersion>
+        <VersionStampOnBuild>true</VersionStampOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NuGet.CommandLine" Version="6.7.0">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="squirrel.windows" Version="1.9.0" />
+        <PackageReference Include="NuGet.CommandLine" Version="6.7.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="squirrel.windows" Version="1.9.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SquirrelNext.Domain\SquirrelNext.Domain.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
+        <ProjectName>SquirrelNext.Wpf\</ProjectName>
         <NugetToolsExe>$(PkgNuGet_CommandLine)\tools\NuGet.exe</NugetToolsExe>
         <SquirrelToolsExe>$(Pkgsquirrel_windows)\tools\Squirrel.exe</SquirrelToolsExe>
-        <ProjectName>SquirrelNext.Wpf\</ProjectName>
         <NuspecFile>$(SolutionDir)$(ProjectName)ReleaseSpec.nuspec</NuspecFile>
         <GenNugetsPath>$(SolutionDir)Deployment\GeneratedNugets\</GenNugetsPath>
     </PropertyGroup>
 
-    <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
-        <Copy SourceFiles="$(SquirrelToolsExe)" DestinationFiles="$(OutDir)..\Update.exe" Condition="!Exists('$(OutDir)..\Update.exe')"/>
+    <Target Name="GenerateRelease" AfterTargets="AfterBuild">
+        <Copy Condition="!Exists('$(OutDir)..\Update.exe')"
+              SourceFiles="$(SquirrelToolsExe)"
+              DestinationFiles="$(OutDir)..\Update.exe"/>
 
-        <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-            <Output TaskParameter="Assemblies" ItemName="assemblyInfo" />
+        <GetAssemblyIdentity Condition="$(Configuration) == Release And $(VersionStampOnBuild) == 'true'"
+                             AssemblyFiles="$(TargetPath)">
+            <Output TaskParameter="Assemblies" ItemName="assemblyInfo"/>
         </GetAssemblyIdentity>
 
-        <PropertyGroup>
+        <PropertyGroup Condition="$(Configuration) == Release And $(VersionStampOnBuild) == 'true'">
             <Version>$([System.Version]::Parse(%(assemblyInfo.Version)).ToString(3))</Version>
         </PropertyGroup>
 
-        <XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
-            <Output TaskParameter="Result" ItemName="ID" />
+        <XmlPeek Condition="$(Configuration) == Release And $(VersionStampOnBuild) == 'true'"
+                 XmlInputPath="$(NuspecFile)"
+                 Query="/package/metadata/id/text()">
+            <Output TaskParameter="Result" ItemName="ID"/>
         </XmlPeek>
 
-        <Exec Command="$(NugetToolsExe) pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(GenNugetsPath)" />
-        <Exec Command="$(SquirrelToolsExe) --releasify $(GenNugetsPath)@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)Deployment\Releases" />
+        <Exec Condition="$(Configuration) == Release And $(VersionStampOnBuild) == 'true'"
+              Command="$(NugetToolsExe) pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(GenNugetsPath)"/>
+        
+        <Exec Condition="$(Configuration) == Release And $(VersionStampOnBuild) == 'true'"
+              Command="$(SquirrelToolsExe) --releasify $(GenNugetsPath)@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)Deployment\Releases"/>
     </Target>
 </Project>

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquirrelNext.Wpf", "SquirrelNext.Wpf\SquirrelNext.Wpf.csproj", "{EFC52F23-C514-4130-B88F-3E7970721A8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquirrelNext.Domain", "SquirrelNext.Domain\SquirrelNext.Domain.csproj", "{6441172E-26F2-49B5-8C02-D5666276F901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{EFC52F23-C514-4130-B88F-3E7970721A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFC52F23-C514-4130-B88F-3E7970721A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFC52F23-C514-4130-B88F-3E7970721A8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6441172E-26F2-49B5-8C02-D5666276F901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6441172E-26F2-49B5-8C02-D5666276F901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6441172E-26F2-49B5-8C02-D5666276F901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6441172E-26F2-49B5-8C02-D5666276F901}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
