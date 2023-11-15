@@ -3,32 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SquirrelNext.Wpf"
+
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid Background="#DD8858">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label>
-                Current version
-            </Label>
+            <Label>Current version</Label>
 
             <TextBox x:Name="CurrentVersionTextBox"
-                     IsReadOnly="True">
-
-            </TextBox>
+                     IsReadOnly="True" />
 
             <Button x:Name="UpdateButton" Click="UpdateButton_Click"
-                    Margin="0,15,0,0" IsEnabled="False">
-                Update
-            </Button>
+                    Margin="0,15,0,0" IsEnabled="False"
+                    Content="Update" />
 
-            <Button Click="CheckForUpdatesButton_Click">
-                Check
-            </Button>
-            
-            <Button Click="SumButton_OnClick">
-                3 + 4 =
-            </Button>
+            <Button Click="CheckForUpdatesButton_Click"
+                    Content="Check" />
+
+            <Button Click="SumButton_OnClick"
+                    Content="4 + 4" />
         </StackPanel>
     </Grid>
 </Window>

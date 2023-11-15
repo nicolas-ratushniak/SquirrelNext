@@ -21,7 +21,6 @@ public partial class MainWindow
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        RestoreSettings("appsettings.json");
         using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
         CurrentVersionTextBox.Text = manager.CurrentlyInstalledVersion()?.ToString() ?? "0.0.0";
     }
@@ -43,7 +42,7 @@ public partial class MainWindow
     private void SumButton_OnClick(object sender, RoutedEventArgs e)
     {
         var sum = new Summator();
-        MessageBox.Show(sum.Sum(3, 4).ToString());
+        MessageBox.Show(sum.Sum(4, 4).ToString());
     }
 
     private async Task Update()
@@ -51,8 +50,10 @@ public partial class MainWindow
         using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
         try
         {
-            BackupSettings("appsettings.json");
             await manager.UpdateApp();
+            
+            var newVersion = manager.CurrentlyInstalledVersion().ToString()!;
+            CopyUserSettingToNewRelease("appsettings.json", newVersion);
         }
         catch (Exception ex)
         {
@@ -60,15 +61,9 @@ public partial class MainWindow
         }
     }
 
-    private static void BackupSettings(string configFileName)
+    private void CopyUserSettingToNewRelease(string configFileName, string newVersion)
     {
-        var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-        if (exeDir is null)
-        {
-            return;
-        }
-
+        var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
         var sourceFile = Path.Combine(exeDir, configFileName);
 
         if (!File.Exists(sourceFile))
@@ -76,29 +71,10 @@ public partial class MainWindow
             return;
         }
 
-        var destFile = Path.Combine(Directory.GetParent(exeDir)!.FullName, configFileName);
+        var destFile = Path.Combine(
+            Directory.GetParent(exeDir)!.FullName, 
+            $"app-{newVersion}",
+            configFileName);
         File.Copy(sourceFile, destFile, true);
-    }
-
-    private static void RestoreSettings(string configFileName)
-    {
-        var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-        if (exeDir is null)
-        {
-            return;
-        }
-        
-        var sourceFile = Path.Combine(Directory.GetParent(exeDir)!.FullName, configFileName);
-        
-        if (!File.Exists(sourceFile))
-        {
-            return;
-        }
-
-        var destFile = Path.Combine(exeDir, configFileName);
-        
-        File.Copy(sourceFile, destFile, true);
-        File.Delete(sourceFile);
     }
 }
