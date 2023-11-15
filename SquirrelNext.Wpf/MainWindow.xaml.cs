@@ -42,7 +42,7 @@ public partial class MainWindow
     private void SumButton_OnClick(object sender, RoutedEventArgs e)
     {
         var sum = new Summator();
-        MessageBox.Show(sum.Sum(3, 3).ToString());
+        MessageBox.Show(sum.Sum(3, 4).ToString());
     }
 
     private async Task Update()

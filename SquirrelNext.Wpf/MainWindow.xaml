@@ -27,7 +27,7 @@
             </Button>
             
             <Button Click="SumButton_OnClick">
-                3 + 3 =
+                3 + 4 =
             </Button>
         </StackPanel>
     </Grid>
