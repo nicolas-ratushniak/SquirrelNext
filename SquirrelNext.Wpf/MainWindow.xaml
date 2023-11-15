@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SquirrelNext.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="GreenYellow">
+    <Grid Background="#DD8858">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label>
                 Current version
@@ -27,7 +27,7 @@
             </Button>
             
             <Button Click="SumButton_OnClick">
-                2 + 2 =
+                3 + 3 =
             </Button>
         </StackPanel>
     </Grid>
