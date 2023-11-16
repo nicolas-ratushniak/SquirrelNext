@@ -8,8 +8,8 @@
         <ApplicationIcon>Assets\squirrel.ico</ApplicationIcon>
         <AssemblyName>SquirrelNext</AssemblyName>
 
-        <AssemblyVersion>1.2.5</AssemblyVersion>
-        <FileVersion>1.2.5</FileVersion>
+        <AssemblyVersion>1.2.6</AssemblyVersion>
+        <FileVersion>1.2.6</FileVersion>
         <VersionStampOnBuild>false</VersionStampOnBuild>
     </PropertyGroup>
 
