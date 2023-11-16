@@ -8,8 +8,8 @@
         <ApplicationIcon>Assets\squirrel.ico</ApplicationIcon>
         <AssemblyName>SquirrelNext</AssemblyName>
 
-        <AssemblyVersion>1.2.4</AssemblyVersion>
-        <FileVersion>1.2.4</FileVersion>
+        <AssemblyVersion>1.2.5</AssemblyVersion>
+        <FileVersion>1.2.5</FileVersion>
         <VersionStampOnBuild>false</VersionStampOnBuild>
     </PropertyGroup>
 
@@ -31,9 +31,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
       <None Remove="appsettings.json" />
-      <Resource Include="appsettings.json">
+      <Content Include="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
+      </Content>
     </ItemGroup>
 
     <PropertyGroup>
