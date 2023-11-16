@@ -66,6 +66,8 @@ public class UpdateService
         }
 
         var destFile = Path.Combine(exeDir, configFileName);
-        File.Copy(sourceFile, destFile, false);
+        
+        File.Copy(sourceFile, destFile, true);
+        File.Delete(sourceFile);
     }
 }

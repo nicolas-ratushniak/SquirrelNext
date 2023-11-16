@@ -13,7 +13,6 @@ public partial class MainWindow
 
     public MainWindow()
     {
-        UpdateService.BackupSettings("appsettings.json");
         UpdateService.RestoreSettings("appsettings.json");
         InitializeComponent();
         Loaded += MainWindow_Loaded;
