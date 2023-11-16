@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using Squirrel;
@@ -12,30 +9,43 @@ namespace SquirrelNext.Wpf;
 public partial class MainWindow
 {
     private const string RepoUrl = "https://github.com/nicolas-ratushniak/SquirrelNext";
+    private UpdateService _updateService;
 
     public MainWindow()
     {
+        UpdateService.BackupSettings("appsettings.json");
+        UpdateService.RestoreSettings("appsettings.json");
         InitializeComponent();
         Loaded += MainWindow_Loaded;
     }
 
+    private static async Task<IUpdateManager> GetUpdateManager()
+    {
+        try
+        {
+            return await UpdateManager.GitHubUpdateManager(RepoUrl);
+        }
+        catch (HttpRequestException ex)
+        {
+            MessageBox.Show(ex.Message);
+            throw;
+        }
+    }
+
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
-        CurrentVersionTextBox.Text = manager.CurrentlyInstalledVersion()?.ToString() ?? "0.0.0";
+        _updateService = new UpdateService(await GetUpdateManager(), "appsettings.json");
+        CurrentVersionTextBox.Text = _updateService.GetCurrentVersionInstalled();
     }
 
     private async void CheckForUpdatesButton_Click(object sender, RoutedEventArgs e)
     {
-        using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
-        var updateInfo = await manager.CheckForUpdate();
-
-        UpdateButton.IsEnabled = updateInfo.ReleasesToApply.Any();
+        UpdateButton.IsEnabled = await _updateService.HasReleasesToApply();
     }
 
     private async void UpdateButton_Click(object sender, RoutedEventArgs e)
     {
-        await Update();
+        await _updateService.UpdateApp();
         Application.Current.Shutdown();
     }
 
@@ -43,38 +53,5 @@ public partial class MainWindow
     {
         var sum = new Summator();
         MessageBox.Show(sum.Sum(4, 5).ToString());
-    }
-
-    private async Task Update()
-    {
-        using var manager = await UpdateManager.GitHubUpdateManager(RepoUrl);
-        try
-        {
-            await manager.UpdateApp();
-            
-            var newVersion = manager.CurrentlyInstalledVersion().ToString()!;
-            CopyUserSettingToNewRelease("appsettings.json", newVersion);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-        }
-    }
-
-    private void CopyUserSettingToNewRelease(string configFileName, string newVersion)
-    {
-        var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var sourceFile = Path.Combine(exeDir, configFileName);
-
-        if (!File.Exists(sourceFile))
-        {
-            return;
-        }
-
-        var destFile = Path.Combine(
-            Directory.GetParent(exeDir)!.FullName, 
-            $"app-{newVersion}",
-            configFileName);
-        File.Copy(sourceFile, destFile, true);
     }
 }
