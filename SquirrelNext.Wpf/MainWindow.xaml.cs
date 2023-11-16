@@ -52,6 +52,6 @@ public partial class MainWindow
     private void SumButton_OnClick(object sender, RoutedEventArgs e)
     {
         var sum = new Summator();
-        MessageBox.Show(sum.Sum(4, 5).ToString());
+        MessageBox.Show(sum.Sum(5, 5).ToString());
     }
 }

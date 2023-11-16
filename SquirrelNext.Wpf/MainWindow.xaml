@@ -22,7 +22,7 @@
                     Content="Check" />
 
             <Button Click="SumButton_OnClick"
-                    Content="4 + 5" />
+                    Content="5 + 5" />
         </StackPanel>
     </Grid>
 </Window>
